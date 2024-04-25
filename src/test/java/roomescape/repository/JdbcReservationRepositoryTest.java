@@ -16,18 +16,19 @@ import roomescape.fixture.Fixture;
 @JdbcTest
 class JdbcReservationRepositoryTest {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    private ReservationTimeRepository reservationTimeRepository;
-    private ReservationRepository reservationRepository;
+    private final ReservationTimeRepository reservationTimeRepository;
+    private final ReservationRepository reservationRepository;
     private ReservationTime savedTime;
 
     @BeforeEach
     void setUp() {
+        savedTime = reservationTimeRepository.save(Fixture.RESERVATION_TIME_1);
+    }
+
+    @Autowired
+    public JdbcReservationRepositoryTest(JdbcTemplate jdbcTemplate) {
         reservationTimeRepository = new JdbcReservationTimeRepository(jdbcTemplate);
         reservationRepository = new JdbcReservationRepository(jdbcTemplate);
-        savedTime = reservationTimeRepository.save(Fixture.RESERVATION_TIME_1);
     }
 
     @Test

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +15,10 @@ import roomescape.fixture.Fixture;
 @JdbcTest
 class JdbcReservationTimeRepositoryTest {
 
+    private final ReservationTimeRepository reservationTimeRepository;
+
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    private ReservationTimeRepository reservationTimeRepository;
-
-    @BeforeEach
-    void setUp() {
+    public JdbcReservationTimeRepositoryTest(JdbcTemplate jdbcTemplate) {
         reservationTimeRepository = new JdbcReservationTimeRepository(jdbcTemplate);
     }
 
