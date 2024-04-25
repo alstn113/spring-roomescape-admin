@@ -7,26 +7,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import roomescape.domain.Reservation;
 import roomescape.domain.ReservationTime;
 import roomescape.fixture.Fixture;
 
-@SpringBootTest
-@Transactional
+@JdbcTest
 class JdbcReservationRepositoryTest {
 
     @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     private ReservationTimeRepository reservationTimeRepository;
-
-    @Autowired
     private ReservationRepository reservationRepository;
-
     private ReservationTime savedTime;
 
     @BeforeEach
     void setUp() {
+        reservationTimeRepository = new JdbcReservationTimeRepository(jdbcTemplate);
+        reservationRepository = new JdbcReservationRepository(jdbcTemplate);
         savedTime = reservationTimeRepository.save(Fixture.RESERVATION_TIME_1);
     }
 
