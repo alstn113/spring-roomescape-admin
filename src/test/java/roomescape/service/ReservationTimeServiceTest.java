@@ -43,22 +43,6 @@ class ReservationTimeServiceTest {
     }
 
     @Test
-    @DisplayName("예약 시간을 조회한다.")
-    void getReservationTimeByIdOrElseThrow() {
-        // given
-        ReservationTime reservationTime = Fixture.RESERVATION_TIME_1;
-        BDDMockito.given(reservationTimeRepository.findById(reservationTime.getId()))
-                .willReturn(Optional.of(reservationTime));
-
-        // when
-        ReservationTime savedReservationTime = reservationTimeService.getReservationTimeByIdOrElseThrow(
-                reservationTime.getId());
-
-        // then
-        assertThat(reservationTime).isEqualTo(savedReservationTime);
-    }
-
-    @Test
     @DisplayName("예약 시간을 추가한다.")
     void addReservationTime() {
         // given

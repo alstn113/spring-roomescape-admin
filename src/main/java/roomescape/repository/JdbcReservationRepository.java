@@ -23,7 +23,7 @@ public class JdbcReservationRepository implements ReservationRepository {
 
         ReservationTime time = new ReservationTime(
                 rs.getLong("time_id"),
-                rs.getObject("start_at", LocalTime.class)
+                rs.getObject("time_start_at", LocalTime.class)
         );
 
         return new Reservation(id, name, date, time);
@@ -44,9 +44,9 @@ public class JdbcReservationRepository implements ReservationRepository {
                         r.name,
                         r.date,
                         t.id as time_id,
-                        t.start_at as time_value
+                        t.start_at as time_start_at
                     FROM reservation as r
-                    inner join reservation_time as t
+                    join reservation_time as t
                     on r.time_id = t.id
                 """;
 

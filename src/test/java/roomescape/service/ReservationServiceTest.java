@@ -2,6 +2,7 @@ package roomescape.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -18,6 +19,7 @@ import roomescape.dto.ReservationRequest;
 import roomescape.dto.ReservationResponse;
 import roomescape.fixture.Fixture;
 import roomescape.repository.ReservationRepository;
+import roomescape.repository.ReservationTimeRepository;
 
 @ExtendWith(MockitoExtension.class)
 class ReservationServiceTest {
@@ -26,7 +28,7 @@ class ReservationServiceTest {
     private ReservationRepository reservationRepository;
 
     @Mock
-    private ReservationTimeService reservationTimeService;
+    private ReservationTimeRepository reservationTimeRepository;
 
     @InjectMocks
     private ReservationService reservationService;
@@ -52,7 +54,7 @@ class ReservationServiceTest {
         // given
         ReservationTime reservationTime = Fixture.RESERVATION_TIME_1;
         Reservation reservation = Fixture.getReservation(reservationTime);
-        when(reservationTimeService.getReservationTimeByIdOrElseThrow(reservationTime.getId()))
+        when(reservationTimeRepository.getById(anyLong()))
                 .thenReturn(reservationTime);
         when(reservationRepository.save(any()))
                 .thenReturn(reservation);

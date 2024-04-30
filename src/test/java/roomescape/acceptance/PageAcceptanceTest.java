@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-class AdminViewAcceptanceTest extends BaseAcceptanceTest {
+class PageAcceptanceTest extends BaseAcceptanceTest {
 
     @Test
     @DisplayName("어드민 페이지를 조회한다.")

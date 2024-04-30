@@ -8,18 +8,19 @@ import roomescape.domain.ReservationTime;
 import roomescape.dto.ReservationRequest;
 import roomescape.dto.ReservationResponse;
 import roomescape.repository.ReservationRepository;
+import roomescape.repository.ReservationTimeRepository;
 
 @Service
 @Transactional(readOnly = true)
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private final ReservationTimeService reservationTimeService;
+    private final ReservationTimeRepository reservationTimeRepository;
 
     public ReservationService(ReservationRepository reservationRepository,
-                              ReservationTimeService reservationTimeService) {
+                              ReservationTimeRepository reservationTimeRepository) {
         this.reservationRepository = reservationRepository;
-        this.reservationTimeService = reservationTimeService;
+        this.reservationTimeRepository = reservationTimeRepository;
     }
 
     public List<ReservationResponse> getAllReservations() {
@@ -32,9 +33,7 @@ public class ReservationService {
 
     @Transactional
     public ReservationResponse addReservation(ReservationRequest reservationRequest) {
-        ReservationTime reservationTime = reservationTimeService.getReservationTimeByIdOrElseThrow(
-                reservationRequest.timeId()
-        );
+        ReservationTime reservationTime = reservationTimeRepository.getById(reservationRequest.timeId());
 
         Reservation reservation = reservationRequest.toReservation(reservationTime);
         Reservation savedReservation = reservationRepository.save(reservation);
